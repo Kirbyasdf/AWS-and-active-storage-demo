@@ -15,10 +15,21 @@ class Api::V1::ImagesController < ApplicationController
        end
      end
 
+     def create
+       @image =  Image.create(name:params["name"], user_id: params["user_id"])
+       @image.picture.attach(params[:picture])
+       @image.update(url: url_for(@image.picture))
+     end
+
+     def show
+       @image = Image.find(params[:id])
+       render json: @image
+     end
+
      private
 
      def image_params
-       params.permit(:id, :name, :picture)
+       params.permit(:name, :user_id, :picture)
      end
 
      def find_image
