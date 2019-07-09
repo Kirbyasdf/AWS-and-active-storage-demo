@@ -16,9 +16,15 @@ class Api::V1::ImagesController < ApplicationController
      end
 
      def create
-       @image =  Image.create(name:params["name"], user_id: params["user_id"])
+       @image =  Image.create(image_params)
        @image.picture.attach(params[:picture])
-       @image.update(url: url_for(@image.picture))
+        details = []
+         Dotenv.load
+         client = Aws::Rekognition::Client.new
+         resp = client.detect_labels( image:{ bytes: @image.picture.download  })
+         resp.labels.each {|label|  details  << "#{label.name}-#{label.confidence.to_i}"}
+      @image.update(url: url_for(@image.picture), details: details)
+      render json: @image
      end
 
      def show
@@ -30,7 +36,7 @@ class Api::V1::ImagesController < ApplicationController
      private
 
      def image_params
-       params.permit(:name, :user_id, :picture)
+       params.permit(:name, :user_id, :picture, :details)
      end
 
      def find_image
