@@ -20,6 +20,8 @@ gem 'puma', '~> 3.11'
 # gem 'mini_magick', '~> 4.8'
 gem 'active_model_serializers', '~> 0.10.0'
 
+gem 'dotenv'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

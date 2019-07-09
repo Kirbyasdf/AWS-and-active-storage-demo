@@ -26,6 +26,7 @@ class Api::V1::ImagesController < ApplicationController
        render json: @image
      end
 
+
      private
 
      def image_params
