@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 2019_07_08_192501) do
 
   create_table "images", force: :cascade do |t|
     t.string "name"
+    t.text "details"
     t.integer "user_id"
     t.string "url"
     t.datetime "created_at", null: false
