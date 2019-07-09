@@ -15,6 +15,15 @@ class Api::V1::ImagesController < ApplicationController
        end
      end
 
+     def show
+       @image = Image.all.find()
+       client = Aws::Rekognition::Client.new
+       resp = client.detect_labels(
+                image: { bytes: File.read("./test_pic.png") }
+              )
+     end
+
+
      private
 
      def image_params
